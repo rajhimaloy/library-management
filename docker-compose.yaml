@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    environment:
+      DB_HOST: pg-lmsDB
+      DB_PORT: 5432
+      DB_NAME: lmsDB
+      DB_USER: root
+      DB_PASSWORD: root@123
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8080:8080
+    depends_on:
+      - pg-lmsDB
