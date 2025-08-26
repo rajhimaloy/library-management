@@ -6,15 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /*
  * Author: Rajib Kumer Ghosh
  */
 
-@Data
+/*@Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class BookDTO {
+@AllArgsConstructor*/
+public class BookDTO implements Serializable {
 
     private Long id;
 

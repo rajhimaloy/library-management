@@ -1,40 +1,55 @@
 # library-management
 Library Management System. A simple CRUD example of a Library Management System. This project is for learning perpose.
 
-# Testing
-# http://localhost:8088/api/rest/lms/borrower/getbyid?borrowerid=1001
-# http://localhost:8088/api/rest/lms/borrower/getbyname/Rajib Kumer Ghosh
-# POST http://localhost:8080/api/rest/lms/borrower/createborrower
-# {
-# "borrowerid":"1",
-# "name": "Rajib Kumer Ghosh",
-# "email": "rajib@gmail.com"
-# }
+# Testing Using Postman/SoapUI
 
-# PUT http://localhost:8080/api/rest/lms/borrower/updateborrower
-# {
-# "borrowerid":"1",
-# "name": "Rajib Kumer Ghosh",
-# "email": "rajib@gmail.com"
-# }
 
-# PATCH http://localhost:8080/api/rest/lms/borrower/updateborroweremail/1001
-# {
-# "name": "Rajib Kumer Ghosh"
-# }
+GET http://localhost:8080/api/rest/lms/book/getallbooklist
+POST http://localhost:8080/api/rest/lms/book/registration
+{
+"id":1,
+"isbnNo":"10001",
+"title":"Java SE",
+"author":"Rajib Kumer Ghosh",
+"available":"true"
+}
 
-# PATCH http://localhost:8080/api/rest/lms/borrower/updateborrowerpartial/1001
-# {
-# "name": "Rajib Kumer Ghosh",
-# "email": "rajib@gmail.com"
-# }
+GET http://localhost:8080/api/rest/lms/borrower/getborrowerlist
+POST http://localhost:8080/api/rest/lms/borrower/registration
+{
+"id": 1,
+"name": "Rajib Kumer Ghosh",
+"email": "rajib1@localhost.com",
+"status": "ACTIVE"
+}
 
-# DELETE http://localhost:8080/api/rest/lms/borrower/deleteborrower
-# {
-# "borrowerid":"1",
-# "name": "Rajib Kumer Ghosh",
-# "email": "rajib@gmail.com"
-# }
+http://localhost:8088/api/rest/lms/borrower/getbyid?borrowerid=1001
+http://localhost:8088/api/rest/lms/borrower/getbyname/Rajib Kumer Ghosh
+
+PUT http://localhost:8080/api/rest/lms/borrower/updateborrower
+{
+"borrowerid":"1",
+"name": "Rajib Kumer Ghosh",
+"email": "rajib@gmail.com"
+}
+
+PATCH http://localhost:8080/api/rest/lms/borrower/updateborroweremail/1001
+{
+"name": "Rajib Kumer Ghosh"
+}
+
+PATCH http://localhost:8080/api/rest/lms/borrower/updateborrowerpartial/1001
+{
+"name": "Rajib Kumer Ghosh",
+"email": "rajib@gmail.com"
+}
+
+DELETE http://localhost:8080/api/rest/lms/borrower/deleteborrower
+{
+"borrowerid":"1",
+"name": "Rajib Kumer Ghosh",
+"email": "rajib@gmail.com"
+}
 
 # Create a borrower
 # curl -X POST "http://localhost:8080/api/rest/lms/borrower/createborrower" -H "Content-Type: application/json" -d '{"name": "Rajib Kumer Ghosh", "email": "rajib@gmail.com"}'

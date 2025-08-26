@@ -31,12 +31,15 @@ public class BookController {
         return iBookService.getAllBookList();
     }
 
-
     /*POST http://localhost:8080/api/rest/lms/book/registration
     {
-        "name": "Rajib Kumer Ghosh",
-        "age": 35
-    }*/
+        "id":1,
+        "isbnNo":"10001",
+        "title":"Java SE",
+        "author":"Rajib Kumer Ghosh",
+        "available":"true"
+    }
+    */
     @PostMapping("/registration")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BookDTO> bookRegistration(@Valid @RequestBody BookDTO bookDTO) {

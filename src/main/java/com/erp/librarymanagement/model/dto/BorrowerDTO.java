@@ -8,15 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /*
  * Author: Rajib Kumer Ghosh
  */
 
-@Data
+/*@Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class BorrowerDTO {
+@AllArgsConstructor*/
+public class BorrowerDTO implements Serializable {
 
     private Long id;
 

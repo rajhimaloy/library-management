@@ -13,10 +13,11 @@ import java.time.OffsetDateTime;
  * @author Rajib Kumer Ghosh
  */
 
-@Data // Lombok generates getters/setters
+// Lombok generates getters/setters
+/*@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder*/
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "LMS_LOAN")

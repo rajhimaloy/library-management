@@ -4,6 +4,9 @@ import com.erp.librarymanagement.exception.*;
 import com.erp.librarymanagement.model.dto.*;
 import com.erp.librarymanagement.model.entities.*;
 import com.erp.librarymanagement.services.impl.LoanService;
+import com.erp.librarymanagement.services.iservices.IBookService;
+import com.erp.librarymanagement.services.iservices.IBorrowerService;
+import com.erp.librarymanagement.services.iservices.ILoanService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,19 +23,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LoanServiceTests {
 
     @Autowired
-    LoanService service;
+    ILoanService iLoanService;
+
+    @Autowired
+    IBorrowerService iBorrowerService;
+
+    @Autowired
+    IBookService iBookService;
 
     @Test
     void borrow_and_return_flow() {
-        var borrower = service.registerBorrower(req("Alice","alice@example.com"));
-        var b1 = service.registerBook(book("111","T","A"));
+        var borrower = iBorrowerService.borrowerRegistration(req("Rajib","rajib@localhost.com"));
+        var b1 = iBookService.bookRegistration(book("10001","Java SE","Rajib Kumer Ghosh"));
 
-        Loan loan = service.borrowBook(borrower.getBorrowerId(), b1.getBookId());
-        assertNotNull(loan.getLoanId());
-        assertThrows(ConflictException.class, () -> service.borrowBook(borrower.getBorrowerId(), b1.getBookId()));
+        Loan loan = iLoanService.borrowBook(borrower.getId(), b1.getId());
+        assertNotNull(loan.getId());
+        assertThrows(ConflictException.class, () -> iLoanService.borrowBook(borrower.getId(), b1.getId()));
 
-        service.returnBook(borrower.getBorrowerId(), b1.getBookId());
-        assertDoesNotThrow(() -> service.borrowBook(borrower.getBorrowerId(), b1.getBookId()));
+        iLoanService.returnBook(borrower.getId(), b1.getId());
+        assertDoesNotThrow(() -> iLoanService.borrowBook(borrower.getId(), b1.getId()));
     }
 
     private BorrowerDTO req(String n, String e){ var r=new BorrowerDTO(); r.setName(n); r.setEmail(e); return r; }

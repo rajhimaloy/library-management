@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Borrower extends Auditable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "borrower_id", updatable = false, nullable = false)
     private Long id;
 
@@ -81,4 +81,5 @@ public class Borrower extends Auditable {
     public void setStatus(BorrowerStatus status) {
         this.status = status;
     }
+
 }

@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /*
  * Author: Rajib Kumer Ghosh
@@ -13,5 +12,5 @@ import java.util.UUID;
 
 @Repository
 public interface IIsbnCatalogRepository extends JpaRepository<IsbnCatalog, Long> {
-    Optional<IsbnCatalog> findByIsbn(String isbnNo);
+    Optional<IsbnCatalog> findByIsbnNo(String isbnNo);
 }

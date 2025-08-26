@@ -24,16 +24,16 @@ public class BookControllerTests {
     @Autowired ObjectMapper om;
 
     @Test
-    void register_and_list() throws Exception {
+    void registerAndList() throws Exception {
         var req = new BookDTO();
-        req.setIsbnNo("123"); req.setTitle("Title"); req.setAuthor("Author");
+        req.setIsbnNo("100001"); req.setTitle("Java SE"); req.setAuthor("Rajib Kumer Ghosh");
 
-        mvc.perform(post("/books").contentType(MediaType.APPLICATION_JSON)
+        mvc.perform(post("/book").contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(req)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.isbn").value("123"));
+                .andExpect(jsonPath("$.isbn").value("100001"));
 
-        mvc.perform(get("/books"))
+        mvc.perform(get("/book"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].available").value(true));
     }

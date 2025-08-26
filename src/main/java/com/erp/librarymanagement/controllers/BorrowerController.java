@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /*
  * Author: Rajib Kumer Ghosh
  */
@@ -23,10 +25,20 @@ public class BorrowerController {
         this.iBorrowerService = iBorrowerService;
     }
 
+    /*Data JPA CRUD*/
+
+    /*GET http://localhost:8080/api/rest/lms/borrower/getborrowerlist*/
+    @GetMapping("/getborrowerlist")
+    public List<BorrowerDTO> getBorrowerList() throws Exception {
+        return iBorrowerService.getBorrowerList();
+    }
+
     /*POST http://localhost:8080/api/rest/lms/borrower/registration
     {
+        "id": 1,
         "name": "Rajib Kumer Ghosh",
-        "age": 35
+        "email": "rajib@localhost.com",
+        "status": "ACTIVE"
     }*/
     @PostMapping("/registration")
     public ResponseEntity<BorrowerDTO> borrowerRegistration(@Valid @RequestBody BorrowerDTO borrowerDTO) {

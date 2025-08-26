@@ -22,7 +22,7 @@ import java.util.List;
  * Author: Rajib Kumer Ghosh
  */
 
-@CacheConfig(cacheNames = "book")
+//@CacheConfig(cacheNames = "book")  //Transfer to Interface for best practice when relationship available
 @Service
 public class BookService implements IBookService {
 
@@ -62,11 +62,11 @@ public class BookService implements IBookService {
     }
 
     // Book Registration
-    @CachePut(value = "book", key = "#book.id")
+    //@Cacheable(value = "book", key = "#result.id")  //Transfer to Interface
     @Transactional
     @Override
     public BookDTO bookRegistration(BookDTO bookDTO) {
-        var catOpt = iIsbnCatalogRepository.findByIsbn(bookDTO.getIsbnNo());
+        var catOpt = iIsbnCatalogRepository.findByIsbnNo(bookDTO.getIsbnNo());
         IsbnCatalog isbnCatalog;
         if (catOpt.isPresent()) {
             isbnCatalog = catOpt.get();
@@ -85,4 +85,5 @@ public class BookService implements IBookService {
         Book bookRes = iBookRepository.save(book);
         return DtoEntityMapper.toBookDTO(bookRes);
     }
+
 }
