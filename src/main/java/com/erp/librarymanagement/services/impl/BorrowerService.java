@@ -1,8 +1,9 @@
 package com.erp.librarymanagement.services.impl;
 
 import com.erp.librarymanagement.exception.ConflictException;
-import com.erp.librarymanagement.model.dto.BorrowerRequest;
+import com.erp.librarymanagement.model.dto.BorrowerDTO;
 import com.erp.librarymanagement.model.entities.Borrower;
+import com.erp.librarymanagement.model.mapper.DtoEntityMapper;
 import com.erp.librarymanagement.repositories.IBorrowerRepository;
 import com.erp.librarymanagement.services.iservices.IBorrowerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +22,27 @@ public class BorrowerService implements IBorrowerService {
     @Autowired
     private final IBorrowerRepository iBorrowerRepository;
 
-    public BorrowerService(IBorrowerRepository iBorrowerRepository) {
+    //private final ModelMapper modelMapper;
+    @Autowired
+    private final DtoEntityMapper DtoEntityMapper;
+
+    public BorrowerService(IBorrowerRepository iBorrowerRepository, DtoEntityMapper DtoEntityMapper) {
         this.iBorrowerRepository = iBorrowerRepository;
+        this.DtoEntityMapper = DtoEntityMapper;
     }
 
     // Register Borrower
     @CachePut(value = "borrower", key = "#borrower.id")
     @Override
-    public Borrower registerBorrower(BorrowerRequest req) {
-        iBorrowerRepository.findByEmail(req.getEmail()).ifPresent(x -> {
+    public BorrowerDTO borrowerRegistration(BorrowerDTO borrowerDTO) {
+        iBorrowerRepository.findByEmail(borrowerDTO.getEmail()).ifPresent(x -> {
             throw new ConflictException("Email already registered");
         });
-        var b = new Borrower();
-        b.setName(req.getName());
-        b.setEmail(req.getEmail());
-        return iBorrowerRepository.save(b);
+
+        //Borrower borrower = modelMapper.map(borrowerDTO, Borrower.class);
+        Borrower borrower = DtoEntityMapper.toBorrower(borrowerDTO);
+
+        Borrower borrowerRes = iBorrowerRepository.save(borrower);
+        return DtoEntityMapper.toBorrowerDTO(borrowerRes);
     }
 }

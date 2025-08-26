@@ -12,6 +12,7 @@ import java.util.UUID;
  */
 
 @Repository
-public interface IBorrowerRepository extends JpaRepository<Borrower, UUID> {
+public interface IBorrowerRepository extends JpaRepository<Borrower, Long> {
     Optional<Borrower> findByEmail(String email);
+
 }

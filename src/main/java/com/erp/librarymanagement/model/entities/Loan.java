@@ -41,4 +41,54 @@ public class Loan {
     @Column(name = "returned_at")
     private OffsetDateTime returnedAt; // If null, means open loan
 
+    public Loan() {
+    }
+
+    public Loan(Long id, Book book, Borrower borrower, OffsetDateTime borrowedAt, OffsetDateTime returnedAt) {
+        this.id = id;
+        this.book = book;
+        this.borrower = borrower;
+        this.borrowedAt = borrowedAt;
+        this.returnedAt = returnedAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Borrower getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(Borrower borrower) {
+        this.borrower = borrower;
+    }
+
+    public OffsetDateTime getBorrowedAt() {
+        return borrowedAt;
+    }
+
+    public void setBorrowedAt(OffsetDateTime borrowedAt) {
+        this.borrowedAt = borrowedAt;
+    }
+
+    public OffsetDateTime getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(OffsetDateTime returnedAt) {
+        this.returnedAt = returnedAt;
+    }
 }

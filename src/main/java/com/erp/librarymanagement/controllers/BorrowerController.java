@@ -1,12 +1,11 @@
 package com.erp.librarymanagement.controllers;
 
-import com.erp.librarymanagement.model.dto.BorrowerRequest;
-import com.erp.librarymanagement.model.dto.BorrowerResponse;
-import com.erp.librarymanagement.model.entities.Borrower;
+import com.erp.librarymanagement.model.dto.BorrowerDTO;
 import com.erp.librarymanagement.services.iservices.IBorrowerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -24,15 +23,15 @@ public class BorrowerController {
         this.iBorrowerService = iBorrowerService;
     }
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public BorrowerResponse create(@Valid @RequestBody BorrowerRequest req) {
-        Borrower b = iBorrowerService.registerBorrower(req);
-        var res = new BorrowerResponse();
-        res.setId(b.getId());
-        res.setName(b.getName());
-        res.setEmail(b.getEmail());
-        return res;
+    /*POST http://localhost:8080/api/rest/lms/borrower/registration
+    {
+        "name": "Rajib Kumer Ghosh",
+        "age": 35
+    }*/
+    @PostMapping("/registration")
+    public ResponseEntity<BorrowerDTO> borrowerRegistration(@Valid @RequestBody BorrowerDTO borrowerDTO) {
+        //log.info("Request to create borrower: {}", borrowerDTO);
+        return new ResponseEntity<>(iBorrowerService.borrowerRegistration(borrowerDTO), HttpStatus.CREATED); // Returns a 201 Created response
     }
 
 }

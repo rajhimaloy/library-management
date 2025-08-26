@@ -1,8 +1,7 @@
 package com.erp.librarymanagement.model.mapper;
 
-import com.erp.librarymanagement.model.dto.BookRequest;
-import com.erp.librarymanagement.model.dto.BookResponse;
-import com.erp.librarymanagement.model.dto.BorrowerRequest;
+import com.erp.librarymanagement.model.dto.BookDTO;
+import com.erp.librarymanagement.model.dto.BorrowerDTO;
 import com.erp.librarymanagement.model.entities.Book;
 import com.erp.librarymanagement.model.entities.Borrower;
 import org.mapstruct.*;
@@ -19,20 +18,20 @@ import java.util.List;
  */
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface BorrowerMapper {
+public interface DtoEntityMapper {
 
     // --- Borrower ---
-    Borrower toEntity(BorrowerRequest borrowerRequest); // DTO → Entity
-    void updateEntityFromDto(BorrowerRequest dto, @MappingTarget Borrower entity);
-    BorrowerRequest toBorrowerRequest(Borrower Borrower);
-    Borrower toBorrower(BorrowerRequest request);
-    List<BorrowerRequest> toBorrowerRequests(List<Borrower> Borrowers);
+    Borrower toEntity(BorrowerDTO borrowerDTO); // DTO → Entity
+    void updateEntityFromDto(BorrowerDTO dto, @MappingTarget Borrower entity);
+    BorrowerDTO toBorrowerDTO(Borrower Borrower);
+    Borrower toBorrower(BorrowerDTO borrowerDTO);
+    List<BorrowerDTO> toBorrowerDTOList(List<Borrower> Borrowers);
 
     
     // --- Book ---
-    BookResponse toBookDTO(Book Book);
-    Book toBook(BookResponse dto);
-    List<BookResponse> toBookDTOs(List<Book> Books);
-    List<Book> toBooks(List<BookResponse> dtos);
+    BookDTO toBookDTO(Book Book);
+    Book toBook(BookDTO bookDTO);
+    List<BookDTO> toBookDTOList(List<Book> bookList);
+    List<Book> toBookList(List<BookDTO> bookDTOList);
 
 }

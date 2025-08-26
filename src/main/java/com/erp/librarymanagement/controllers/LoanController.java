@@ -24,9 +24,9 @@ public class LoanController {
         this.iLoanService = iLoanService;
     }
 
-    @PostMapping("/{borrowerId}/borrow/{bookId}")
+    @PostMapping("/{borrowerId}/borrowbook/{bookId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, Object> borrow(@PathVariable UUID borrowerId, @PathVariable Long bookId) {
+    public Map<String, Object> borrowBook(@PathVariable Long borrowerId, @PathVariable Long bookId) {
         Loan loan = iLoanService.borrowBook(borrowerId, bookId);
         return Map.of(
                 "id", loan.getId(),
@@ -36,8 +36,8 @@ public class LoanController {
         );
     }
 
-    @PostMapping("/{borrowerId}/return/{bookId}")
-    public Map<String, Object> returnBook(@PathVariable UUID borrowerId, @PathVariable Long bookId) {
+    @PostMapping("/{borrowerId}/returnbook/{bookId}")
+    public Map<String, Object> returnBook(@PathVariable Long borrowerId, @PathVariable Long bookId) {
         Loan loan = iLoanService.returnBook(borrowerId, bookId);
         return Map.of(
                 "id", loan.getId(),

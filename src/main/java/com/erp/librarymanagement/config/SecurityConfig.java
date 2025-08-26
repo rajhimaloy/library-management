@@ -26,8 +26,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**").permitAll() // Allow actuator access without auth
-                        .requestMatchers("/public/**").permitAll()   // Example: any public endpoints
+                        .requestMatchers("/api/rest/lms/actuator/**").permitAll() // Allow actuator access without auth
+                        .requestMatchers("/api/rest/lms/public/**").permitAll()   // Example: any public endpoints
                         .anyRequest().authenticated()                         // Secure all other endpoints
                 );
 

@@ -4,14 +4,12 @@ import com.erp.librarymanagement.exception.*;
 import com.erp.librarymanagement.model.entities.*;
 import com.erp.librarymanagement.repositories.*;
 import com.erp.librarymanagement.services.iservices.ILoanService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //import jakarta.transaction.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 /*
  * Author: Rajib Kumer Ghosh
@@ -39,14 +37,14 @@ public class LoanService implements ILoanService {
 
     // Borrow and return
     @Transactional
-    public Loan borrowBook(UUID borrowerId, Long bookId) {
+    public Loan borrowBook(Long borrowerId, Long bookId) {
         var borrower = iBorrowerRepository.findById(borrowerId)
                 .orElseThrow(() -> new NotFoundException("Borrower not found"));
         var book = iBookRepository.findById(bookId)
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
-        iLoanRepository.findByBookIdAndReturnedAtIsNull(bookId).ifPresent(x -> {
-            throw new ConflictException("Book is already borrowed");
+        iLoanRepository.findBookByIdAndReturnedAtIsNull(bookId).ifPresent(x -> {
+            throw new ConflictException("Book is already borrowed by Borrower:- " + borrower.getName());
         });
 
         var loan = new Loan();
@@ -57,11 +55,11 @@ public class LoanService implements ILoanService {
     }
 
     @Transactional
-    public Loan returnBook(UUID borrowerId, Long bookId) {
-        var loan = iLoanRepository.findByBookIdAndReturnedAtIsNull(bookId)
+    public Loan returnBook(Long borrowerId, Long bookId) {
+        var loan = iLoanRepository.findBookByIdAndReturnedAtIsNull(bookId)
                 .orElseThrow(() -> new NotFoundException("No open loan for this book"));
         if (!loan.getBorrower().getId().equals(borrowerId)) {
-            throw new ConflictException("This book is borrowed by another borrower");
+            throw new ConflictException("This book is borrowed by another borrower:- " + loan.getBorrower().getName());
         }
         loan.setReturnedAt(OffsetDateTime.now());
         return iLoanRepository.save(loan);

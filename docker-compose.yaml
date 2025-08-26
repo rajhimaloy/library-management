@@ -10,5 +10,5 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - 8080:8080
-    depends_on:
-      - pg-lmsDB
+    #depends_on:
+    #  - pg-lmsDB

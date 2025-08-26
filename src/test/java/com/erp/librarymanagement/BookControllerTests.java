@@ -25,7 +25,7 @@ public class BookControllerTests {
 
     @Test
     void register_and_list() throws Exception {
-        var req = new BookRequest();
+        var req = new BookDTO();
         req.setIsbnNo("123"); req.setTitle("Title"); req.setAuthor("Author");
 
         mvc.perform(post("/books").contentType(MediaType.APPLICATION_JSON)

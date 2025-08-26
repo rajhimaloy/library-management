@@ -29,5 +29,27 @@ public class Book {
     @JoinColumn(name = "isbn_id", nullable = false)
     private IsbnCatalog isbnCatalog;
 
+    public Book() {
+    }
 
+    public Book(Long id, IsbnCatalog isbnCatalog) {
+        this.id = id;
+        this.isbnCatalog = isbnCatalog;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public IsbnCatalog getIsbnCatalog() {
+        return isbnCatalog;
+    }
+
+    public void setIsbnCatalog(IsbnCatalog isbnCatalog) {
+        this.isbnCatalog = isbnCatalog;
+    }
 }

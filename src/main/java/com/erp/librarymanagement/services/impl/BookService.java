@@ -1,10 +1,10 @@
 package com.erp.librarymanagement.services.impl;
 
 import com.erp.librarymanagement.exception.ConflictException;
-import com.erp.librarymanagement.model.dto.BookRequest;
-import com.erp.librarymanagement.model.dto.BookResponse;
+import com.erp.librarymanagement.model.dto.BookDTO;
 import com.erp.librarymanagement.model.entities.Book;
 import com.erp.librarymanagement.model.entities.IsbnCatalog;
+import com.erp.librarymanagement.model.mapper.DtoEntityMapper;
 import com.erp.librarymanagement.repositories.IBookRepository;
 import com.erp.librarymanagement.repositories.IIsbnCatalogRepository;
 import com.erp.librarymanagement.repositories.ILoanRepository;
@@ -35,19 +35,23 @@ public class BookService implements IBookService {
     @Autowired
     private final ILoanRepository iLoanRepository;
 
-    public BookService(IBookRepository iBookRepository, IIsbnCatalogRepository iIsbnCatalogRepository, ILoanRepository iLoanRepository) {
+    @Autowired
+    private final DtoEntityMapper DtoEntityMapper;
+
+    public BookService(IBookRepository iBookRepository, IIsbnCatalogRepository iIsbnCatalogRepository, ILoanRepository iLoanRepository, com.erp.librarymanagement.model.mapper.DtoEntityMapper dtoEntityMapper) {
         this.iBookRepository = iBookRepository;
         this.iIsbnCatalogRepository = iIsbnCatalogRepository;
         this.iLoanRepository = iLoanRepository;
+        DtoEntityMapper = dtoEntityMapper;
     }
 
     // Retrieve all books and cache the result
-    @Cacheable(value = "getallbooks")
+    @Cacheable(value = "getallbooklist")
     @Override
-    public List<BookResponse> getAllBooks() {
+    public List<BookDTO> getAllBookList() {
         return iBookRepository.findAll().stream().map(b -> {
-            boolean available = iLoanRepository.findByBookIdAndReturnedAtIsNull(b.getId()).isEmpty();
-            var r = new BookResponse();
+            boolean available = iLoanRepository.findBookByIdAndReturnedAtIsNull(b.getId()).isEmpty();
+            var r = new BookDTO();
             r.setId(b.getId());
             r.setIsbnNo(b.getIsbnCatalog().getIsbnNo());
             r.setTitle(b.getIsbnCatalog().getTitle());
@@ -61,23 +65,24 @@ public class BookService implements IBookService {
     @CachePut(value = "book", key = "#book.id")
     @Transactional
     @Override
-    public Book registerBook(BookRequest req) {
-        var catOpt = iIsbnCatalogRepository.findByIsbn(req.getIsbnNo());
-        IsbnCatalog cat;
+    public BookDTO bookRegistration(BookDTO bookDTO) {
+        var catOpt = iIsbnCatalogRepository.findByIsbn(bookDTO.getIsbnNo());
+        IsbnCatalog isbnCatalog;
         if (catOpt.isPresent()) {
-            cat = catOpt.get();
-            if (!cat.getTitle().equals(req.getTitle()) || !cat.getAuthor().equals(req.getAuthor())) {
-                throw new ConflictException("ISBN exists with different title/author");
+            isbnCatalog = catOpt.get();
+            if (!isbnCatalog.getTitle().equals(bookDTO.getTitle()) || !isbnCatalog.getAuthor().equals(bookDTO.getAuthor())) {
+                throw new ConflictException("ISBN exists with different title and author");
             }
         } else {
-            cat = new IsbnCatalog();
-            cat.setIsbnNo(req.getIsbnNo());
-            cat.setTitle(req.getTitle());
-            cat.setAuthor(req.getAuthor());
-            cat = iIsbnCatalogRepository.save(cat);
+            isbnCatalog = new IsbnCatalog();
+            isbnCatalog.setIsbnNo(bookDTO.getIsbnNo());
+            isbnCatalog.setTitle(bookDTO.getTitle());
+            isbnCatalog.setAuthor(bookDTO.getAuthor());
+            isbnCatalog = iIsbnCatalogRepository.save(isbnCatalog);
         }
         var book = new Book();
-        book.setIsbnCatalog(cat);
-        return iBookRepository.save(book);
+        book.setIsbnCatalog(isbnCatalog);
+        Book bookRes = iBookRepository.save(book);
+        return DtoEntityMapper.toBookDTO(bookRes);
     }
 }

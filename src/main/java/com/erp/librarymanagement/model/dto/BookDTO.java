@@ -1,47 +1,43 @@
-package com.erp.librarymanagement.model.entities;
+package com.erp.librarymanagement.model.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * @author Rajib Kumer Ghosh
+/*
+ * Author: Rajib Kumer Ghosh
  */
 
-@Data // Lombok generates getters/setters
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EntityListeners(AuditingEntityListener.class)
-@Entity
-@Table(name = "LMS_ISBN_CATALOG")
-public class IsbnCatalog {
+public class BookDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "isbn_id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "isbn_no", nullable = false, length = 50)
+    @NotBlank
     private String isbnNo;
 
-    @Column(name = "title", nullable = false, length = 100)
+    @NotBlank
     private String title;
 
-    @Column(name = "author", nullable = false, length = 150)
+    @NotBlank
     private String author;
 
-    public IsbnCatalog() {
+    private boolean available;
+
+    public BookDTO() {
     }
 
-    public IsbnCatalog(Long id, String isbnNo, String title, String author) {
+    public BookDTO(Long id, String isbnNo, String title, String author, boolean available) {
         this.id = id;
         this.isbnNo = isbnNo;
         this.title = title;
         this.author = author;
+        this.available = available;
     }
 
     public Long getId() {
@@ -74,5 +70,13 @@ public class IsbnCatalog {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

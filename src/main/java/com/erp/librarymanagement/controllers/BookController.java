@@ -1,11 +1,10 @@
 package com.erp.librarymanagement.controllers;
-import com.erp.librarymanagement.model.dto.BookRequest;
-import com.erp.librarymanagement.model.dto.BookResponse;
-import com.erp.librarymanagement.model.entities.Book;
+import com.erp.librarymanagement.model.dto.BookDTO;
 import com.erp.librarymanagement.services.iservices.IBookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,22 +24,24 @@ public class BookController {
         this.iBookService = iBookService;
     }
 
-    @GetMapping("/allbooks")
-    public List<BookResponse> getAllBooks() {
-        return iBookService.getAllBooks();
+
+    /*GET http://localhost:8080/api/rest/lms/book/getallbooklist*/
+    @GetMapping("/getallbooklist")
+    public List<BookDTO> getAllBookList() throws Exception {
+        return iBookService.getAllBookList();
     }
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookResponse create(@Valid @RequestBody BookRequest req) {
-        Book b = iBookService.registerBook(req);
-        var res = new BookResponse();
-        res.setId(b.getId());
-        res.setIsbnNo(b.getIsbnCatalog().getIsbnNo());
-        res.setTitle(b.getIsbnCatalog().getTitle());
-        res.setAuthor(b.getIsbnCatalog().getAuthor());
-        res.setAvailable(true);
-        return res;
+
+    /*POST http://localhost:8080/api/rest/lms/book/registration
+    {
+        "name": "Rajib Kumer Ghosh",
+        "age": 35
+    }*/
+    @PostMapping("/registration")
+    //@ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<BookDTO> bookRegistration(@Valid @RequestBody BookDTO bookDTO) {
+        //log.info("Registration of the book: {}", bookDTO);
+        return new ResponseEntity<>(iBookService.bookRegistration(bookDTO), HttpStatus.CREATED); // Returns a 201 Created response
     }
 
 }

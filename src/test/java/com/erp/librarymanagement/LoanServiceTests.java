@@ -35,7 +35,7 @@ public class LoanServiceTests {
         assertDoesNotThrow(() -> service.borrowBook(borrower.getBorrowerId(), b1.getBookId()));
     }
 
-    private BorrowerRequest req(String n, String e){ var r=new BorrowerRequest(); r.setName(n); r.setEmail(e); return r; }
-    private BookRequest book(String i, String t, String a){ var r=new BookRequest(); r.setIsbnNo(i); r.setTitle(t); r.setAuthor(a); return r; }
+    private BorrowerDTO req(String n, String e){ var r=new BorrowerDTO(); r.setName(n); r.setEmail(e); return r; }
+    private BookDTO book(String i, String t, String a){ var r=new BookDTO(); r.setIsbnNo(i); r.setTitle(t); r.setAuthor(a); return r; }
 
 }
