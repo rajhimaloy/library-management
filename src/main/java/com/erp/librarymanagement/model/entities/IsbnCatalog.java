@@ -23,7 +23,7 @@ public class IsbnCatalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "isbn_id", updatable = false, nullable = false)
-    private Long isbnId;
+    private Long id;
 
     @Column(name = "isbn_no", nullable = false, length = 50)
     private String isbnNo;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BorrowRequest {
+public class BorrowerRequest {
 
     @NotBlank
     private String name;

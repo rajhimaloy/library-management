@@ -24,8 +24,8 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "loan_id", updatable = false, nullable = false)
-    private Long loanId;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     @ManyToOne(optional=false, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)

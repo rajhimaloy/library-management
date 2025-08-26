@@ -93,12 +93,12 @@ services:
     # Connect to the New Database
     # lmsDB=# \c lmsDB
     # lmsDB=# \c lmsDB
-    # Create Student table
+    # Create Borrower table
     # lmsDB=# CREATE TABLE LMS_BORROWER (borrower_id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100) NOT NULL, status VARCHAR(20) NOT NULL);
     # Verify the table:
     # lmsDB=# \dt
     # Select Query to Table
-    # lmsDB=# SELECT * FROM STS_STUDENT;
+    # lmsDB=# SELECT * FROM LMS_BORROWER;
     # To exit the PostgreSQL command-line tool:
     # lmsDB=# \q
 

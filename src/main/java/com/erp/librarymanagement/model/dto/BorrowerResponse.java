@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BorrowerResponse {
 
-    private UUID borrowerId;
+    private UUID id;
     private String name;
     private String email;
 

@@ -3,13 +3,11 @@ package com.erp.librarymanagement;
 import com.erp.librarymanagement.exception.*;
 import com.erp.librarymanagement.model.dto.*;
 import com.erp.librarymanagement.model.entities.*;
-import com.erp.librarymanagement.services.impl.LibraryService;
+import com.erp.librarymanagement.services.impl.LoanService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class LibraryServiceTests {
+public class LoanServiceTests {
 
     @Autowired
-    LibraryService service;
+    LoanService service;
 
     @Test
     void borrow_and_return_flow() {
@@ -37,7 +35,7 @@ public class LibraryServiceTests {
         assertDoesNotThrow(() -> service.borrowBook(borrower.getBorrowerId(), b1.getBookId()));
     }
 
-    private BorrowRequest req(String n, String e){ var r=new BorrowRequest(); r.setName(n); r.setEmail(e); return r; }
+    private BorrowerRequest req(String n, String e){ var r=new BorrowerRequest(); r.setName(n); r.setEmail(e); return r; }
     private BookRequest book(String i, String t, String a){ var r=new BookRequest(); r.setIsbnNo(i); r.setTitle(t); r.setAuthor(a); return r; }
 
 }

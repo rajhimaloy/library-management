@@ -29,7 +29,7 @@ public class Borrower extends Auditable {
     @Id
     @GeneratedValue
     @Column(name = "borrower_id", updatable = false, nullable = false)
-    private UUID borrowerId;
+    private UUID id;
 
     @Column(name = "first_name", nullable = false, length = 100)
     private String name;

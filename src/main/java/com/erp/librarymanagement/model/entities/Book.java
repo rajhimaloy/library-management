@@ -23,7 +23,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id", updatable = false, nullable = false)
-    private Long bookId;
+    private Long id;
 
     @ManyToOne(optional=false, fetch = FetchType.LAZY)
     @JoinColumn(name = "isbn_id", nullable = false)

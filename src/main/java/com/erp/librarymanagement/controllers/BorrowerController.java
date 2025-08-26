@@ -1,10 +1,11 @@
 package com.erp.librarymanagement.controllers;
 
-import com.erp.librarymanagement.model.dto.BorrowRequest;
+import com.erp.librarymanagement.model.dto.BorrowerRequest;
 import com.erp.librarymanagement.model.dto.BorrowerResponse;
 import com.erp.librarymanagement.model.entities.Borrower;
-import com.erp.librarymanagement.services.impl.LibraryService;
+import com.erp.librarymanagement.services.iservices.IBorrowerService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +14,22 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/borrowers")
+@RequestMapping("/borrower")
 public class BorrowerController {
 
-    private final LibraryService service;
-    public BorrowerController(LibraryService service) { this.service = service; }
+    @Autowired
+    private final IBorrowerService iBorrowerService;
 
-    @PostMapping
+    public BorrowerController(IBorrowerService iBorrowerService) {
+        this.iBorrowerService = iBorrowerService;
+    }
+
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public BorrowerResponse create(@Valid @RequestBody BorrowRequest req) {
-        Borrower b = service.registerBorrower(req);
+    public BorrowerResponse create(@Valid @RequestBody BorrowerRequest req) {
+        Borrower b = iBorrowerService.registerBorrower(req);
         var res = new BorrowerResponse();
-        res.setBorrowerId(b.getBorrowerId());
+        res.setId(b.getId());
         res.setName(b.getName());
         res.setEmail(b.getEmail());
         return res;
